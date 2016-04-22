@@ -3,7 +3,8 @@ import sinon from 'sinon'
 import fetchCached from '../'
 
 const URL = 'http://localhost.com'
-const CACHE_DATA = { cached: 'cached' }
+const CACHE_JSON = { cached: 'cached' }
+const CACHE_TEXT = 'cached'
 const FETCH_DATA = { fetched: 'fetched' }
 
 test('returns a function called with new', function (t) {
@@ -49,12 +50,12 @@ test('fetch returns response data if no cache exists', function (t) {
     .then(json =>  t.deepEqual(json, FETCH_DATA))
 })
 
-test('fetch returns cached data if cache exists', function (t) {
+test('fetch returns .json() cached data if cache exists', function (t) {
   t.plan(1)
 
   const fetchStub = sinon.stub().returns(Promise.resolve(FETCH_DATA))
   const dbStub = {
-    get: sinon.stub().returns(Promise.resolve(JSON.stringify(CACHE_DATA))),
+    get: sinon.stub().returns(Promise.resolve(JSON.stringify(CACHE_JSON))),
     set: sinon.stub()
   }
   const fetch = fetchCached({
@@ -64,5 +65,23 @@ test('fetch returns cached data if cache exists', function (t) {
 
   fetch(URL)
     .then((response) => { return response.json() })
-    .then((json) => { t.deepEqual(json, CACHE_DATA) })
+    .then((json) => { t.deepEqual(json, CACHE_JSON) })
+})
+
+test('fetch returns .text() cached data if cache exists', function (t) {
+  t.plan(1)
+
+  const fetchStub = sinon.stub().returns(Promise.resolve(FETCH_DATA))
+  const dbStub = {
+    get: sinon.stub().returns(Promise.resolve(CACHE_TEXT)),
+    set: sinon.stub()
+  }
+  const fetch = fetchCached({
+    fetch: fetchStub,
+    db: dbStub
+  })
+
+  fetch(URL)
+    .then((response) => { return response.text() })
+    .then((json) => { t.deepEqual(json, CACHE_TEXT) })
 })
