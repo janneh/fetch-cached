@@ -18,7 +18,7 @@ fetch('https://api.github.com')
   .then(function(response) {
     return response.json()
   }).then(function(json) {
-    console.log(json)
+    console.log(json) // eslint-disable-line
   })
 
 setTimeout(() => {
@@ -26,6 +26,6 @@ setTimeout(() => {
     .then(function(response) {
       return response.json()
     }).then(function(json) {
-      console.log(json)
+      console.log(json) // eslint-disable-line
     })
 }, 3000)
