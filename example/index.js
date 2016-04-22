@@ -6,7 +6,7 @@ const expiry = 600
 const redis = createClient()
 const options = {
   fetch: nodeFetch,
-  db: {
+  cache: {
     get: (k) => redis.get(k),
     set: (k, v) => redis.send('set', [k, v, 'EX', expiry])
   }

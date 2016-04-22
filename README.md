@@ -18,7 +18,7 @@ import fetchCached from 'fetch-cached'
 const redis = createClient()
 const fetch = fetchCached({
   fetch: nodeFetch,
-  db: {
+  cache: {
     get: (key) => redis.get(key),
     set: (key, value) => redis.set(key, value)
   }

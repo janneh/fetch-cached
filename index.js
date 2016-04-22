@@ -1,23 +1,23 @@
 /*
-* Returns a fetch function (wrapped with cache) to be used as normal fetch
+* Returns a fetch function wrapped with cache to be used as normal fetch
 */
 
 export default function fetchCached(options) {
   if (!options || !options.fetch) throw Error('fetch is a required option')
-  if (!options || !options.db) throw Error('db is a required option')
+  if (!options || !options.cache) throw Error('cache is a required option')
 
-  const { fetch, db } = options
+  const { fetch, cache } = options
 
   function setCache(key, fetched) {
     fetched
       .then(response => response.clone().text())
       .then((value) => {
-        db.set(key, value)
+        cache.set(key, value)
       })
   }
 
   function getCache(key) {
-    const value = db.get(key).then((data) => {
+    const value = cache.get(key).then(data => {
       if (!data) return null
 
       return Promise.resolve({
@@ -40,7 +40,7 @@ export default function fetchCached(options) {
     }
 
     const response = getCache(url)
-      .then((cached) => {
+      .then(cached => {
         // return the cached result if it exist
         if(cached) {
           return cached

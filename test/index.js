@@ -9,41 +9,41 @@ const FETCH_DATA = { fetched: 'fetched' }
 
 test('returns a function called with new', function (t) {
   t.plan(1)
-  t.is(typeof new fetchCached({ fetch: true, db: true }), 'function')
+  t.is(typeof new fetchCached({ fetch: true, cache: true }), 'function')
 })
 
 test('returns a function called without new', function (t) {
   t.plan(1)
-  t.is(typeof fetchCached({ fetch: true, db: true }), 'function')
+  t.is(typeof fetchCached({ fetch: true, cache: true }), 'function')
 })
 
-test('call without options.db throws', function (t) {
+test('call without options.cache throws', function (t) {
   t.plan(1)
   t.throws(() => fetchCached({ fetch: true }))
 })
 
 test('call without options.fetch throws', function (t) {
   t.plan(1)
-  t.throws(() => fetchCached({ db: true }))
+  t.throws(() => fetchCached({ cache: true }))
 })
 
-test('call with options.fetch and options.db does not throws', function (t) {
+test('call with options.fetch and options.cache does not throws', function (t) {
   t.plan(1)
-  t.doesNotThrow(() => fetchCached({ fetch: true, db: true }))
+  t.doesNotThrow(() => fetchCached({ fetch: true, cache: true }))
 })
 
 test('fetch returns response data if no cache exists', function (t) {
   t.plan(1)
 
   const fetchStub = sinon.stub().returns(Promise.resolve(FETCH_DATA))
-  const dbStub = {
+  const cacheStub = {
     get: sinon.stub().withArgs(URL).returns(Promise.resolve(null)),
     set: sinon.spy()
   }
 
   const fetch = fetchCached({
     fetch: fetchStub,
-    db: dbStub
+    cache: cacheStub
   })
 
   fetch(URL)
@@ -54,13 +54,13 @@ test('fetch returns .json() cached data if cache exists', function (t) {
   t.plan(1)
 
   const fetchStub = sinon.stub().returns(Promise.resolve(FETCH_DATA))
-  const dbStub = {
+  const cacheStub = {
     get: sinon.stub().returns(Promise.resolve(JSON.stringify(CACHE_JSON))),
     set: sinon.stub()
   }
   const fetch = fetchCached({
     fetch: fetchStub,
-    db: dbStub
+    cache: cacheStub
   })
 
   fetch(URL)
@@ -72,13 +72,13 @@ test('fetch returns .text() cached data if cache exists', function (t) {
   t.plan(1)
 
   const fetchStub = sinon.stub().returns(Promise.resolve(FETCH_DATA))
-  const dbStub = {
+  const cacheStub = {
     get: sinon.stub().returns(Promise.resolve(CACHE_TEXT)),
     set: sinon.stub()
   }
   const fetch = fetchCached({
     fetch: fetchStub,
-    db: dbStub
+    cache: cacheStub
   })
 
   fetch(URL)
