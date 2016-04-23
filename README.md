@@ -1,8 +1,6 @@
 fetch-cache
 =====================
 
-caution: This is work in progress.
-
 Fetch cache provides a flexible cache wrapper around fetch.
 
 ## Install
@@ -13,9 +11,15 @@ $ npm install --save fetch-cached
 ## Usage
 
 What fetch implementation to use and how to cache the
-data are defined as options. Below is an example using node-fetch and then-redis.
+data are defined as options. Below is an example
+using node-fetch and then-redis to cache for 10 minutes.
 
-The cache option is expected to have functions `set(key, value)` and `get(key)` (returning a Promise that resolves to the value).
+The cache option is expected to have functions `set(key, value)` and `get(key)`
+(returning a Promise that resolves to the value).
+
+restrictions: Response from cache will come with with these props:
+`ok: true`, `url: key`, `status: 200`, `statusText: 'OK'`,
+and functions `.json()` and `.text()`
 
 ```
 import nodeFetch from 'node-fetch'

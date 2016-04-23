@@ -1,6 +1,6 @@
 {
   "name": "fetch-cached",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Fetch with response cache",
   "author": "janneh",
   "license": "MIT",
