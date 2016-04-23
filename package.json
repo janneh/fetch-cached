@@ -1,6 +1,6 @@
 {
   "name": "fetch-cached",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Fetch with response cache",
   "author": "janneh",
   "license": "MIT",
@@ -14,7 +14,8 @@
   "scripts": {
     "test": "npm run lint && babel-node ./test | faucet",
     "lint": "eslint index.js",
-    "build": "babel -d ./build index.js"
+    "build": "babel -d ./build index.js",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
