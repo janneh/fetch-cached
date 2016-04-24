@@ -9,9 +9,7 @@ export default function fetchCached(options) {
   const { fetch, cache } = options
 
   function setCache(key, data) {
-    data.then(value => {
-      cache.set(key, value)
-    })
+    data.then(value => { cache.set(key, value) })
   }
 
   function getCache(key) {
@@ -40,9 +38,7 @@ export default function fetchCached(options) {
     const response = getCache(url)
       .then(cached => {
         // return the cached result if it exist
-        if(cached) {
-          return cached
-        }
+        if(cached) return cached
 
         // return fetch for non-cached requests and set cache
         return fetch(url, options).then(response => {
