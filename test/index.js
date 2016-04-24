@@ -32,7 +32,7 @@ test('call with options.fetch and options.cache does not throws', function (t) {
   t.doesNotThrow(() => fetchCached({ fetch: true, cache: true }))
 })
 
-test('fetch returns response data if no cache exists', function (t) {
+test.skip('fetch returns response data if no cache exists', function (t) {
   t.plan(1)
 
   const fetchStub = sinon.stub().returns(Promise.resolve(FETCH_DATA))
