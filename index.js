@@ -8,12 +8,10 @@ export default function fetchCached(options) {
 
   const { fetch, cache } = options
 
-  function setCache(key, fetched) {
-    fetched
-      .then(response => response.clone().text())
-      .then((value) => {
-        cache.set(key, value)
-      })
+  function setCache(key, data) {
+    data.then(value => {
+      cache.set(key, value)
+    })
   }
 
   function getCache(key) {
@@ -46,11 +44,12 @@ export default function fetchCached(options) {
           return cached
         }
 
-        const fetched = fetch(url, options)
-        setCache(url, fetched)
+        // return fetch for non-cached requests and set cache
+        return fetch(url, options).then(response => {
+          setCache(url, response.clone().text())
 
-        // return fetch for non-cached requests
-        return fetched
+          return Promise.resolve(response)
+        })
       })
 
     return response
