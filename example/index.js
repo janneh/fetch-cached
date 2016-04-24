@@ -1,6 +1,6 @@
 import nodeFetch from 'node-fetch'
 import { createClient } from 'then-redis'
-import fetchCache from '../'
+import fetchCached from '../'
 
 const expiry = 600
 const redis = createClient()
@@ -12,7 +12,7 @@ const options = {
   }
 }
 
-const fetch = fetchCache(options)
+const fetch = fetchCached(options)
 
 fetch('https://api.github.com')
   .then(function(response) {
