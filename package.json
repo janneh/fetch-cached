@@ -15,7 +15,8 @@
     "test": "npm run lint && babel-node ./test | faucet",
     "lint": "eslint index.js",
     "build": "babel -d ./build index.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "postpublish": "rm -r ./build"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
