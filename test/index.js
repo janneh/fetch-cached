@@ -1,4 +1,4 @@
-import test from 'tape-catch'
+import test from 'tape'
 import sinon from 'sinon'
 import fetchCached from '../'
 
