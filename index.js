@@ -8,20 +8,20 @@ export default function fetchCached(options) {
 
   const { fetch, cache } = options
 
-  function cachedResponse(data) {
-    if (!data) return null
+  function cachedResponse(url, body) {
+    if (!body) return null
 
     return Promise.resolve({
       ok: true,
-      url: key,
+      url: url,
       status: 200,
       statusText: 'OK',
-      json: () => Promise.resolve(JSON.parse(data)),
-      text: () => Promise.resolve(data)
+      json: () => Promise.resolve(JSON.parse(body)),
+      text: () => Promise.resolve(body)
     })
   }
 
-  function cachingRequest(url, options) {
+  function cachingFetch(url, options) {
     return fetch(url, options)
       .then(response => {
         response.clone().text().then(value => cache.set(url, value))
@@ -36,14 +36,14 @@ export default function fetchCached(options) {
       return fetch(url, options)
     }
 
-    return cache.get(key)
-      .then(cachedResponse)
+    return cache.get(url)
+      .then(data => cachedResponse(url, data))
       .then(cached => {
         // return the cached result if it exist
         if(cached) return cached
 
         // return fetch request after setting cache
-        return cachingRequest(url, options)
+        return cachingFetch(url, options)
       })
   }
 }
