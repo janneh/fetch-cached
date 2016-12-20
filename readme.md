@@ -5,7 +5,7 @@ Fetch cache provides a flexible cache wrapper around fetch.
 
 ## Install
 
-```
+```bash
 $ npm install --save fetch-cached
 ```
 ## Usage
@@ -21,7 +21,7 @@ restrictions: Response from cache will come with with these props:
 `ok: true`, `url: key`, `status: 200`, `statusText: 'OK'`,
 and functions `.json()` and `.text()`
 
-```
+```js
 import nodeFetch from 'node-fetch'
 import { createClient } from 'then-redis'
 import fetchCached from 'fetch-cached'
